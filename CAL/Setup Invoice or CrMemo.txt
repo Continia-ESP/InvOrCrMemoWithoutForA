@@ -1,0 +1,44 @@
+OBJECT Codeunit 60002 CDC Purch. - Val. Amt. In. VAT
+{
+  OBJECT-PROPERTIES
+  {
+    Date=29/04/21;
+    Time=13:35:53;
+    Modified=Yes;
+    Version List=DC;
+  }
+  PROPERTIES
+  {
+    TableNo=6085593;
+    OnRun=VAR
+            Document@1100288005 : Record 6085590;
+            Field@1100288004 : Record 6085580;
+            CaptureMgt@1100288002 : Codeunit 6085576;
+            PurchDocMgt@1100288001 : Codeunit 6085709;
+            DocType@1100288000 : Integer;
+            TextInvoice@1100288003 : TextConst 'ENU=I;ESP=F';
+            TextCrMemo@1100288006 : TextConst 'ENU=Cr;ESP=A';
+          BEGIN
+            Document.GET("Document No.");
+
+            Field.GET(Document."Template No.",Field.Type::Header,'AMOUNTINCLVAT');
+            //IF CaptureMgt.IsValidValue(Field,"Document No.",0) THEN BEGIN
+              IF CaptureMgt.GetDecimal(Document,Field.Type,Field.Code,0) >= 0 THEN BEGIN
+                IF Field.GET("Template No.",Field.Type::Header,'DOCTYPE') THEN
+                  CaptureMgt.UpdateFieldValue(Document."No.",0,0,Field,TextInvoice,TRUE,"Updated By User")
+              END ELSE BEGIN
+                IF Field.GET("Template No.",Field.Type::Header,'DOCTYPE') THEN
+                  CaptureMgt.UpdateFieldValue(Document."No.",0,0,Field,TextCrMemo,TRUE,"Updated By User");
+              END;
+            //END;
+          END;
+
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

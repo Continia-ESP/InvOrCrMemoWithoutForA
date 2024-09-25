@@ -1,0 +1,3 @@
+- Importar la Codeunit
+- Editar el campo Factura/Abono y desmarcar el campo "Buscar valor"
+- Editar el campo Importe IVA Inc. y añadir la codeunit al validar dicho campo.

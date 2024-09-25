@@ -1,0 +1,2 @@
+- Publicar la extensión
+- Editar el campo Factura/Abono y desmarcar el campo "Buscar valor"
